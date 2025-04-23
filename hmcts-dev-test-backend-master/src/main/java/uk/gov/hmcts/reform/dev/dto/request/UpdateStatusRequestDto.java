@@ -7,7 +7,7 @@ import uk.gov.hmcts.reform.dev.models.Task;
 
 @Getter
 @Setter
-public class UpdateStatusDto {
+public class UpdateStatusRequestDto {
 
     @NotNull(message = "Status must not be null")
     private Task.Status status;

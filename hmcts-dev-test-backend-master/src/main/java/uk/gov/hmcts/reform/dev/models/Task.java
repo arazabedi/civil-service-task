@@ -1,17 +1,19 @@
 package uk.gov.hmcts.reform.dev.models;
 
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
-import javax.persistence.Entity;
 
-import jakarta.persistence.*;
 
 @Getter
 @Setter
 @Entity
+@Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "task")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

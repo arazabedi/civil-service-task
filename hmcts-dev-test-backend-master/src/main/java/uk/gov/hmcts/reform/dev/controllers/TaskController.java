@@ -1,5 +1,12 @@
 package uk.gov.hmcts.reform.dev.controllers;
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.server.ResponseStatusException;
+import uk.gov.hmcts.reform.dev.dto.request.CreateTaskRequestDto;
+import uk.gov.hmcts.reform.dev.models.Task;
 import uk.gov.hmcts.reform.dev.services.TaskService;
 
 import org.springframework.http.ResponseEntity;
@@ -7,7 +14,7 @@ import static org.springframework.http.ResponseEntity.ok;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
+import java.util.List;
 
 
 @RestController
@@ -49,7 +56,7 @@ public class TaskController {
     @GetMapping()
     public List<Task> getAllTasks() {
         List<Task> allTasks = taskService.getAllTasks();
-        return ok(allTasks);
+        return ok(allTasks).getBody();
     }
 
     // Get a task by ID
@@ -61,7 +68,7 @@ public class TaskController {
 
     // Update the status of a task
     @PutMapping("/{id}/status")
-    public ResponseEntity<Task> updateTaskStatus(@PathVariable Long id, @Valid @RequestBody UpdateStatusDto dto) {
+    public ResponseEntity<Task> updateTaskStatus(@PathVariable Long id, @Valid @RequestBody uk.gov.hmcts.reform.dev.dtos.UpdateStatusRequestDto dto) {
         Task updatedTask = taskService.updateTaskStatus(id, dto.getStatus());
         return ResponseEntity.ok(updatedTask);
     }
