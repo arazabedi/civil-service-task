@@ -67,8 +67,8 @@ public class TaskController {
     }
 
     // Update the status of a task
-    @PutMapping("/{id}/status")
-    public ResponseEntity<Task> updateTaskStatus(@PathVariable Long id, @Valid @RequestBody uk.gov.hmcts.reform.dev.dtos.UpdateStatusRequestDto dto) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<Task> updateTaskStatus(@PathVariable Long id, @Valid @RequestBody uk.gov.hmcts.reform.dev.dto.request.UpdateStatusRequestDto dto) {
         Task updatedTask = taskService.updateTaskStatus(id, dto.getStatus());
         return ResponseEntity.ok(updatedTask);
     }

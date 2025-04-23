@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.dev.dtos;
+package uk.gov.hmcts.reform.dev.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
