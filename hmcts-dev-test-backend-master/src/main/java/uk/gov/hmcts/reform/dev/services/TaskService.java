@@ -1,9 +1,10 @@
 import lombok.AllArgsConstructor;
+import uk.gov.hmcts.reform.dev.exceptions.TaskNotFoundException;
 
 @AllArgsConstructor
 @Service
 public class TaskService {
-    // Use final fields meaning they must be provided at  object creation - Spring handles the rest
+    // Use final fields meaning they must be provided at object creation - Spring handles the rest
     private final TaskRepository taskRepository;
 
     // Create a new task
@@ -14,7 +15,7 @@ public class TaskService {
     // Retrieve a task by ID
     public Task getTaskById(Long id) {
         return taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found with ID: " + id));
+            .orElseThrow(() -> new TaskNotFoundException(id));
     }
 
     // Retrieve all tasks

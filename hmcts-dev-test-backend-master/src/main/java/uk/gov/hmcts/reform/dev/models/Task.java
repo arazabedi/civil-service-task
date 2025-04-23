@@ -11,12 +11,11 @@ import jakarta.persistence.*;
 @Getter
 @Setter
 @Entity
+@Builder
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String caseNumber;
 
     private String title;
 
