@@ -17,6 +17,13 @@ const statusMap: Record<ServerTask['status'], ColumnId> = {
 	IN_PROGRESS: 'in-progress',
 };
 
+// Object used to convert column id to server task status (see updateTaskStatus function)
+const reverseStatusMap: Record<ColumnId, ServerTask['status']> = {
+	'pending': 'PENDING',
+	'completed': 'COMPLETED',
+	'in-progress': 'IN_PROGRESS',
+};
+
 // Converts a server task object to a task object used in the app
 function convertServerTaskToTask(serverTask: ServerTask): Task {
 	return {
@@ -68,6 +75,32 @@ export async function createTask(task: createTaskDto): Promise<Task> {
 			throw new Error("Failed to create task: " + error.message);
 		} else {
 			throw new Error("Failed to create task: An unknown error occurred");
+		}
+	}
+}
+
+// UPDATE A TASK STATUS
+export async function updateTaskStatus(taskId: string, status: ColumnId): Promise<Task> {
+	try {
+		const response = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_PORT}/tasks/${taskId}`, {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				status: reverseStatusMap[status],
+			}),
+		});
+		if (!response.ok) {
+			throw new Error('Failed to update task status');
+		}
+		const serverTask: ServerTask = await response.json();
+		return convertServerTaskToTask(serverTask);
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			throw new Error("Failed to update task status: " + error.message);
+		} else {
+			throw new Error("Failed to update task status: An unknown error occurred");
 		}
 	}
 }

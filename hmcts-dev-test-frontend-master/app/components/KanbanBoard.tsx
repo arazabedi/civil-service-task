@@ -25,7 +25,7 @@ import { hasDraggableData } from "./utils";
 import { coordinateGetter } from "./multipleContainersKeyboardPreset";
 
 import { useEffect } from "react";
-import { getAllTasks } from "../services/taskService";
+import { getAllTasks, updateTaskStatus } from "../services/taskService";
 
 const defaultCols = [
   {
@@ -44,7 +44,6 @@ const defaultCols = [
 
 export type ColumnId = (typeof defaultCols)[number]["id"];
 
-
 export function KanbanBoard() {
   const [columns, setColumns] = useState<Column[]>(defaultCols);
   const pickedUpTaskColumn = useRef<ColumnId | null>(null);
@@ -56,7 +55,7 @@ export function KanbanBoard() {
 
   const [activeTask, setActiveTask] = useState<Task | null>(null);
 
-	const [isClient, setIsClient] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     let isMounted = true; // To prevent setting state on unmounted components
@@ -115,12 +114,9 @@ export function KanbanBoard() {
           active.id,
           pickedUpTaskColumn.current
         );
-        return `Picked up Task ${
-          active.data.current.task.title
-        } at position: ${taskPosition + 1} of ${
-          tasksInColumn.length
-					} in column ${column?.title}`;
-				// TODO: Add update service here
+        return `Picked up Task ${active.data.current.task.title} at position: ${
+          taskPosition + 1
+        } of ${tasksInColumn.length} in column ${column?.title}`;
       }
     },
     onDragOver({ active, over }) {
@@ -152,9 +148,7 @@ export function KanbanBoard() {
         return `Task was moved over position ${taskPosition + 1} of ${
           tasksInColumn.length
         } in column ${column?.title}`;
-			}
-			// TODO: Add update service here
-
+      }
     },
     onDragEnd({ active, over }) {
       if (!hasDraggableData(active) || !hasDraggableData(over)) {
@@ -189,9 +183,7 @@ export function KanbanBoard() {
           tasksInColumn.length
         } in column ${column?.title}`;
       }
-			pickedUpTaskColumn.current = null;
-			// TODO: Add update service here
-
+      pickedUpTaskColumn.current = null;
     },
     onDragCancel({ active }) {
       pickedUpTaskColumn.current = null;
@@ -254,7 +246,18 @@ export function KanbanBoard() {
     }
   }
 
-  function onDragEnd(event: DragEndEvent) {
+  async function onDragEnd(event: DragEndEvent) {
+    console.log("drag end");
+    console.log(activeTask);
+    try {
+      updateTaskStatus(
+        activeTask?.id as string,
+        activeTask?.columnId as ColumnId
+      );
+    } catch (error) {
+      console.error("Error updating task status:", error);
+    }
+
     setActiveColumn(null);
     setActiveTask(null);
 
