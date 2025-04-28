@@ -71,3 +71,21 @@ export async function createTask(task: createTaskDto): Promise<Task> {
 		}
 	}
 }
+
+// DELETE A TASK
+export async function deleteTask(taskId: string): Promise<void> {
+	try {
+		const response = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_PORT}/tasks/${taskId}`, {
+			method: 'DELETE',
+		});
+		if (!response.ok) {
+			throw new Error('Failed to delete task');
+		}
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			throw new Error("Failed to delete task: " + error.message);
+		} else {
+			throw new Error("Failed to delete task: An unknown error occurred");
+		}
+	}
+}

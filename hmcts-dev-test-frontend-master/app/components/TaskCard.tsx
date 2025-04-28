@@ -4,10 +4,11 @@ import { CSS } from "@dnd-kit/utilities";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cva } from "class-variance-authority";
-import { GripVertical } from "lucide-react";
+import { GripVertical, Trash2 } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { ColumnId } from "./KanbanBoard";
-
+import { deleteTask } from "../services/taskService";
+import { toast } from "sonner";
 export interface Task {
   id: UniqueIdentifier;
   title: string;
@@ -61,6 +62,26 @@ export function TaskCard({ task, isOverlay }: TaskCardProps) {
     },
   });
 
+  async function handleDelete(task) {
+		try {
+			console.log(task.id);
+			// deleteTask(task.id)
+			toast.success("Task has been deleted", {
+				description: "Task has been deleted",
+				action: {
+					label: "Undo",
+					onClick: () => console.log("Undo"),
+				},
+			});
+		} catch (error) {
+			if (error instanceof Error) {
+				throw new Error("Failed to delete task: " + error.message);
+			} else {
+				throw new Error("Failed to delete task: An unknown error occurred");
+			}
+		}
+  }
+
   return (
     <Card
       ref={setNodeRef}
@@ -90,6 +111,9 @@ export function TaskCard({ task, isOverlay }: TaskCardProps) {
       <CardContent className="text-left whitespace-pre-wrap">
         <h3 className="text-lg font-semibold">{task.title}</h3>
         {task.description}
+        <Button className="hover:opacity-50 cursor-pointer" variant="destructive" onClick={() => handleDelete(task)}>
+          <Trash2 />
+        </Button>
       </CardContent>
     </Card>
   );

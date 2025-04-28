@@ -91,8 +91,6 @@ export function BoardColumn({ column, tasks, isOverlay }: BoardColumnProps) {
       </CardHeader>
       <ScrollArea>
         <CardContent className="flex flex-grow flex-col gap-2 p-2">
-          {/* TODO: Add Add Task onClick functionality */}
-					{/* TODO: Remember to refetch tasks after adding a new one */}
 					<CreateTaskForm/>
           <SortableContext items={tasksIds}>
             {tasks.map((task) => (
