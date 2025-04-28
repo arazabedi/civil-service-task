@@ -44,114 +44,12 @@ const defaultCols = [
 
 export type ColumnId = (typeof defaultCols)[number]["id"];
 
-const initialTasks: Task[] = [
-  {
-    id: "task1",
-    columnId: "pending",
-    title: "Project initiation",
-    description: "Kick off and define project scope and objectives.",
-    dueDate: new Date("2025-05-05"),
-  },
-  {
-    id: "task2",
-    columnId: "pending",
-    title: "Gather requirements",
-    description:
-      "Collect and document detailed requirements from all stakeholders.",
-    dueDate: new Date("2025-05-10"),
-  },
-  {
-    id: "task3",
-    columnId: "pending",
-    title: "Create wireframes",
-    description: "Develop basic structural outlines of key website pages.",
-    dueDate: new Date("2025-05-15"),
-  },
-  {
-    id: "task4",
-    columnId: "in-progress",
-    title: "Homepage layout",
-    description:
-      "Develop the visual structure and elements of the main landing page.",
-    dueDate: new Date("2025-05-20"),
-  },
-  {
-    id: "task5",
-    columnId: "in-progress",
-    title: "Design color scheme",
-    description:
-      "Choose and implement the color palette and typography for the website.",
-    dueDate: new Date("2025-05-25"),
-  },
-  {
-    id: "task6",
-    columnId: "completed",
-    title: "Implement authentication",
-    description: "Develop the user login and registration functionalities.",
-    dueDate: new Date("2025-04-15"),
-  },
-  {
-    id: "task7",
-    columnId: "completed",
-    title: "Build contact page",
-    description:
-      "Create the 'Contact Us' page with necessary forms and information.",
-    dueDate: new Date("2025-04-18"),
-  },
-  {
-    id: "task8",
-    columnId: "completed",
-    title: "Create product catalog",
-    description: "Develop the section to display and manage product listings.",
-    dueDate: new Date("2025-04-21"),
-  },
-  {
-    id: "task9",
-    columnId: "completed",
-    title: "Develop about us page",
-    description:
-      "Create the 'About Us' page detailing the company's background and mission.",
-    dueDate: new Date("2025-04-23"),
-  },
-  {
-    id: "task10",
-    columnId: "completed",
-    title: "Optimize for mobile",
-    description:
-      "Ensure the website is responsive and functions correctly on various mobile devices.",
-    dueDate: new Date("2025-04-24"),
-  },
-  {
-    id: "task11",
-    columnId: "completed",
-    title: "Integrate payment gateway",
-    description:
-      "Implement the system for processing online payments securely.",
-    dueDate: new Date("2025-04-25"),
-  },
-  {
-    id: "task12",
-    columnId: "completed",
-    title: "Perform testing",
-    description:
-      "Conduct thorough testing to identify and fix any bugs or issues.",
-    dueDate: new Date("2025-04-26"),
-  },
-  {
-    id: "task13",
-    columnId: "completed",
-    title: "Launch website",
-    description: "Deploy the completed website to the live server.",
-    dueDate: new Date("2025-04-27"),
-  },
-];
 
 export function KanbanBoard() {
   const [columns, setColumns] = useState<Column[]>(defaultCols);
   const pickedUpTaskColumn = useRef<ColumnId | null>(null);
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
 
-  // const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [tasks, setTasks] = useState<Task[]>([]);
 
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);

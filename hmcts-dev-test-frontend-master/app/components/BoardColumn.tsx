@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader } from "./ui/card";
 import { Button } from "./ui/button";
 import { GripVertical } from "lucide-react";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
+import { CreateTaskForm } from "./forms/createTaskForm";
 
 export interface Column {
   id: UniqueIdentifier;
@@ -90,17 +91,14 @@ export function BoardColumn({ column, tasks, isOverlay }: BoardColumnProps) {
       </CardHeader>
       <ScrollArea>
         <CardContent className="flex flex-grow flex-col gap-2 p-2">
+          {/* TODO: Add Add Task onClick functionality */}
+					{/* TODO: Remember to refetch tasks after adding a new one */}
+					<CreateTaskForm/>
           <SortableContext items={tasksIds}>
             {tasks.map((task) => (
               <TaskCard key={task.id} task={task} />
             ))}
-					</SortableContext>
-					{/* TODO: Add Add Task onClick functionality */}
-					{/* TODO: Remember to refetch tasks after adding a new one */}
-					<Button
-						variant="outline">
-						<span className="text-primary">Add Task</span>
-						</Button>
+          </SortableContext>
         </CardContent>
       </ScrollArea>
     </Card>

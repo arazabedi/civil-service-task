@@ -1,6 +1,7 @@
 import { Task } from "../components/TaskCard";
 import { ColumnId } from "../components/KanbanBoard";
-
+import { createTaskDto } from "../dto/taskDTO";
+// Form of the task object returned from the server as JSON
 interface ServerTask {
 	id: string;
 	title: string;
@@ -9,12 +10,14 @@ interface ServerTask {
 	dueDateTime: string;
 }
 
+// Object used to convert server task status to column id (see convertServerTaskToTask function)
 const statusMap: Record<ServerTask['status'], ColumnId> = {
 	PENDING: 'pending',
 	COMPLETED: 'completed',
 	IN_PROGRESS: 'in-progress',
 };
 
+// Converts a server task object to a task object used in the app
 function convertServerTaskToTask(serverTask: ServerTask): Task {
 	return {
 		id: serverTask.id,
@@ -25,6 +28,7 @@ function convertServerTaskToTask(serverTask: ServerTask): Task {
 	};
 }
 
+// RETRIEVE ALL TASKS
 export async function getAllTasks(): Promise<Task[]> {
 	try {
 		const response = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_PORT}/tasks`);
@@ -35,6 +39,35 @@ export async function getAllTasks(): Promise<Task[]> {
 			throw new Error("Failed to fetch tasks: " + error.message);
 		} else {
 			throw new Error("Failed to fetch tasks: An unknown error occurred");
+		}
+	}
+}
+
+// CREATE A NEW TASK
+export async function createTask(task: createTaskDto): Promise<Task> {
+	try {
+		const response = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_PORT}/tasks`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				title: task.title,
+				description: task.description,
+				status: task.status,
+				dueDateTime: task.dueDateTime,
+			}),
+		});
+		if (!response.ok) {
+			throw new Error('Failed to create task');
+		}
+		const serverTask: ServerTask = await response.json();
+		return convertServerTaskToTask(serverTask);
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			throw new Error("Failed to create task: " + error.message);
+		} else {
+			throw new Error("Failed to create task: An unknown error occurred");
 		}
 	}
 }
