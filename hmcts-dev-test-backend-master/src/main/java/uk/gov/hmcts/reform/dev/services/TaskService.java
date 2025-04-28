@@ -7,6 +7,7 @@ import uk.gov.hmcts.reform.dev.models.Task;
 import uk.gov.hmcts.reform.dev.repositories.TaskRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @Service
@@ -20,9 +21,11 @@ public class TaskService {
     }
 
     // Retrieve a task by ID
-    public Task getTaskById(Long id) {
-        return taskRepository.findById(id)
-            .orElseThrow(() -> new TaskNotFoundException(id));
+    public Task getTaskById(String id) {
+        // Convert the string ID to a UUID
+        UUID parsedId = UUID.fromString(id);
+        return taskRepository.findById(parsedId)
+            .orElseThrow(() -> new TaskNotFoundException(parsedId));
     }
 
     // Retrieve all tasks
@@ -31,14 +34,14 @@ public class TaskService {
     }
 
     // Update the status of a task
-    public Task updateTaskStatus(Long id, Task.Status status) {
+    public Task updateTaskStatus(String id, Task.Status status) {
         Task task = getTaskById(id);
         task.setStatus(status);
         return taskRepository.save(task);
     }
 
     // Delete a task
-    public void deleteTask(Long id) {
+    public void deleteTask(String id) {
         Task task = getTaskById(id);
         taskRepository.delete(task);
     }

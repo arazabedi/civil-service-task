@@ -63,23 +63,24 @@ export function TaskCard({ task, isOverlay }: TaskCardProps) {
   });
 
   async function handleDelete(task) {
-		try {
-			console.log(task.id);
-			// deleteTask(task.id)
-			toast.success("Task has been deleted", {
-				description: "Task has been deleted",
-				action: {
-					label: "Undo",
-					onClick: () => console.log("Undo"),
-				},
-			});
-		} catch (error) {
-			if (error instanceof Error) {
-				throw new Error("Failed to delete task: " + error.message);
-			} else {
-				throw new Error("Failed to delete task: An unknown error occurred");
-			}
-		}
+    try {
+      console.log(task.id);
+      deleteTask(task.id);
+      toast.success("Task has been deleted", {
+        description: "Task has been deleted",
+        action: {
+          label: "Undo",
+          onClick: () => console.log("Undo"),
+        },
+      });
+      window.location.reload();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error("Failed to delete task: " + error.message);
+      } else {
+        throw new Error("Failed to delete task: An unknown error occurred");
+      }
+    }
   }
 
   return (
@@ -111,7 +112,11 @@ export function TaskCard({ task, isOverlay }: TaskCardProps) {
       <CardContent className="text-left whitespace-pre-wrap">
         <h3 className="text-lg font-semibold">{task.title}</h3>
         {task.description}
-        <Button className="hover:opacity-50 cursor-pointer" variant="destructive" onClick={() => handleDelete(task)}>
+        <Button
+          className="hover:opacity-50 cursor-pointer"
+          variant="destructive"
+          onClick={() => handleDelete(task)}
+        >
           <Trash2 />
         </Button>
       </CardContent>

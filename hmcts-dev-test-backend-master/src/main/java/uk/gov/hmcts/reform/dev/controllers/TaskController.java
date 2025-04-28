@@ -60,21 +60,21 @@ public class TaskController {
 
     // Get a task by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
+    public ResponseEntity<Task> getTaskById(@PathVariable String id) {
         Task task = taskService.getTaskById(id); // throws TaskNotFoundException if not found
         return ResponseEntity.ok(task);
     }
 
     // Update the status of a task
     @PatchMapping("/{id}")
-    public ResponseEntity<Task> updateTaskStatus(@PathVariable Long id, @Valid @RequestBody uk.gov.hmcts.reform.dev.dto.request.UpdateStatusRequestDto dto) {
+    public ResponseEntity<Task> updateTaskStatus(@PathVariable String id, @Valid @RequestBody uk.gov.hmcts.reform.dev.dto.request.UpdateStatusRequestDto dto) {
         Task updatedTask = taskService.updateTaskStatus(id, dto.getStatus());
         return ResponseEntity.ok(updatedTask);
     }
 
     // Delete a task
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTask(@PathVariable String id) {
         taskService.deleteTask(id);
         return ResponseEntity.noContent().build();
     }
