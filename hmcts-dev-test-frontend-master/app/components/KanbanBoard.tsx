@@ -247,8 +247,6 @@ export function KanbanBoard() {
   }
 
   async function onDragEnd(event: DragEndEvent) {
-    console.log("drag end");
-    console.log(activeTask);
     try {
       updateTaskStatus(
         activeTask?.id as string,

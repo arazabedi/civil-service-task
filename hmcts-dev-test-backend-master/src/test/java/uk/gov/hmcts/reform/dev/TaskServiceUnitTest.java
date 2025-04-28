@@ -26,7 +26,7 @@ import java.util.UUID;
 @ExtendWith(MockitoExtension.class)
 class TaskServiceUnitTest {
 
-    // Mock dependencies to stub their methods
+    // Mock TaskRepository class to stub its methods
     @Mock
     private TaskRepository taskRepository;
 

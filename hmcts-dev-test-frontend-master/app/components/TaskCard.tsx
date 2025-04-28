@@ -112,13 +112,15 @@ export function TaskCard({ task, isOverlay }: TaskCardProps) {
       <CardContent className="text-left whitespace-pre-wrap">
         <h3 className="text-lg font-semibold">{task.title}</h3>
         {task.description}
-        <Button
-          className="hover:opacity-50 cursor-pointer"
-          variant="destructive"
-          onClick={() => handleDelete(task)}
-        >
-          <Trash2 />
-        </Button>
+        <div className="flex flex-row items-center justify-end mt-2">
+          <Button
+            className="hover:opacity-50 cursor-pointer"
+            variant="destructive"
+            onClick={() => handleDelete(task)}
+          >
+            <Trash2 />
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );

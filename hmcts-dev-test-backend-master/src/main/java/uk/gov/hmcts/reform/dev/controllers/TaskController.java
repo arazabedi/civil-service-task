@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.server.ResponseStatusException;
 import uk.gov.hmcts.reform.dev.dto.request.CreateTaskRequestDto;
+import uk.gov.hmcts.reform.dev.exceptions.TaskNotFoundException;
 import uk.gov.hmcts.reform.dev.models.Task;
 import uk.gov.hmcts.reform.dev.services.TaskService;
 
@@ -13,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import static org.springframework.http.ResponseEntity.ok;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -65,6 +65,7 @@ public class TaskController {
         return ResponseEntity.ok(task);
     }
 
+
     // Update the status of a task
     @PatchMapping("/{id}")
     public ResponseEntity<Task> updateTaskStatus(@PathVariable String id, @Valid @RequestBody uk.gov.hmcts.reform.dev.dto.request.UpdateStatusRequestDto dto) {
@@ -77,5 +78,12 @@ public class TaskController {
     public ResponseEntity<Void> deleteTask(@PathVariable String id) {
         taskService.deleteTask(id);
         return ResponseEntity.noContent().build();
+    }
+
+
+    // Exception handler for TaskNotFoundException
+    @ExceptionHandler(TaskNotFoundException.class)
+    public ResponseEntity<Object> handleTaskNotFoundException(TaskNotFoundException ex) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

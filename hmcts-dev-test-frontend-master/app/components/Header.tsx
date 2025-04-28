@@ -6,7 +6,6 @@ export const Header: React.FC = () => {
   <div className="container mx-auto flex items-center justify-between py-3 px-4">
     <a href="https://www.gov.uk" className="flex items-center">
       <span className="text-2xl font-bold tracking-tight">HMCTS Dev Test</span>
-      <p className="text-end ml-3">Task API</p>
     </a>
     <nav className="flex space-x-4">
       <a href="#" className="text-white hover:underline">Home</a>
