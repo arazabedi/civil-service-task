@@ -1,14 +1,21 @@
 # Task Management API
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://example.com/build)
-[![Coverage](https://img.shields.io/badge/coverage-90%25-green.svg)](https://example.com/coverage)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://img.shields.io/badge/job%20application%20task-8A2BE2)](https://example.com/build)
 
 ## Overview
 
 The **Task Management API** is a backend application built with Spring Boot. It provides a RESTful interface for creating, retrieving, updating, and deleting tasks. The API is designed to be consumed by frontend applications, such as those built with Next.js, and it stores data in a PostgreSQL database.
 
+I have included a frontend directory for my Next.js app in this repository. This consumes the API and displays the database data in the form of a kanban board that allows the user to drag and drop a task onto another status column in order to update the status on the backend. To run the app use:
+
+```bash
+next dev
+```
+
 ---
+<img width="1611" alt="image" src="https://github.com/user-attachments/assets/16f78446-30ef-4987-b5be-04bc923099de" />
+
+
 
 ## Technology Stack
 
@@ -18,7 +25,6 @@ The **Task Management API** is a backend application built with Spring Boot. It 
 - Jakarta Bean Validation
 - Lombok
 - PostgreSQL
-- OpenAPI / Swagger (via springdoc)
 
 ---
 
@@ -127,9 +133,9 @@ Access the API at: `http://localhost:4000`
 ```json
 {
   "title": "Task Title",
-  "description": "Optional task description",
+  "description": "Task description",
   "status": "TO_DO",
-  "dueDateTime": "2025-05-01T12:00:00Z"
+  "dueDateTime": "2025-05-01T12:00:00"
 }
 ```
 
@@ -138,9 +144,9 @@ Access the API at: `http://localhost:4000`
 {
   "id": "uuid",
   "title": "Task Title",
-  "description": "Optional task description",
+  "description": "Task description",
   "status": "TO_DO",
-  "dueDateTime": "2025-05-01T12:00:00.000Z"
+  "dueDateTime": "2025-05-01T12:00:00.000"
 }
 ```
 
@@ -175,11 +181,11 @@ Access the API at: `http://localhost:4000`
 **Response:** `200 OK`
 ```json
 {
-  "id": "uuid",
+  "id": "valid-uuid",
   "title": "Task Title",
   "description": "...",
   "status": "TO_DO",
-  "dueDateTime": "2025-05-01T12:00:00.000Z"
+  "dueDateTime": "2025-05-01T12:00:00.000"
 }
 ```
 
@@ -203,7 +209,7 @@ Access the API at: `http://localhost:4000`
 **Response:** `200 OK`
 ```json
 {
-  "id": "uuid",
+  "id": "valid-uuid",
   "title": "Task Title",
   "status": "DONE"
 }
@@ -228,7 +234,7 @@ Access the API at: `http://localhost:4000`
 
 ## Frontend Integration
 
-This API is designed to be consumed by a frontend client (e.g. built with React or Next.js). Ensure the client points to the correct base URL (default: `http://localhost:4000`).
+This API is designed to be consumed by a frontend client (e.g. built with React or Next.js). Ensure the client points to the correct base URL (default: `http://localhost:4000`). Additionally check CorsConfig.java if there are CORS errors.
 
 ---
 
@@ -239,12 +245,6 @@ The API uses standard HTTP status codes:
 - `400 Bad Request`: Invalid input
 - `404 Not Found`: Resource not found
 - `204 No Content`: Successful deletion
-
----
-
-## Contributing
-
-Contributions are welcome. Please follow standard Java conventions, write clear commit messages, and submit pull requests for review.
 
 ---
 
