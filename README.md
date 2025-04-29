@@ -248,7 +248,3 @@ The API uses standard HTTP status codes:
 
 ---
 
-## License
-
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
-
