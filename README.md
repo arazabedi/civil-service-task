@@ -15,6 +15,9 @@ next dev
 ---
 <img width="1611" alt="image" src="https://github.com/user-attachments/assets/16f78446-30ef-4987-b5be-04bc923099de" />
 
+Below is a demonstration of how to create a task, how to update the status, and how to delete. Note that after dragging the task to a new column, I manually refreshed (there is a moment the screen goes white) to demonstrate database persistence.
+
+https://github.com/user-attachments/assets/ecab0842-1157-405c-bb20-1a13d62357a9
 
 
 ## Technology Stack
